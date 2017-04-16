@@ -20,9 +20,10 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('Client disconencted');
     });
-    socket.on('createMessage', (newMessage) => {
+    socket.on('createMessage', (newMessage, callback) => {
         console.log('create email', newMessage);
         io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
+        callback('This is from the server');
         // socket.broadcast.emit('newMessage', {
         //     from: newMessage.from,
         //     text: newMessage.text,
@@ -31,6 +32,6 @@ io.on('connection', (socket) => {
     })
 });
 
-server.listen(port, () => {
+server.listen(port, function() {
     console.log(`Server started on port ${port}`);
 });
